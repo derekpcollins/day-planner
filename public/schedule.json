@@ -1,0 +1,42 @@
+{
+  "date": "2026-03-24",
+  "updated": "2026-03-24T07:00:00",
+  "summary": "3 tasks · 1 event",
+  "items": [
+    {
+      "id": "1",
+      "type": "event",
+      "title": "Workout with trainer",
+      "time": "09:00",
+      "duration": 60,
+      "notes": ""
+    },
+    {
+      "id": "2",
+      "type": "task",
+      "title": "Remove Fidelity Visa from Apple Pay",
+      "time": "08:00",
+      "duration": 15,
+      "notes": "Settings → Wallet & Apple Pay",
+      "priority": "high"
+    },
+    {
+      "id": "3",
+      "type": "task",
+      "title": "Cancel Houseplant auto-ship",
+      "time": "08:00",
+      "duration": 10,
+      "notes": "houseplant.com — saves $150/mo",
+      "priority": "high"
+    },
+    {
+      "id": "4",
+      "type": "task",
+      "title": "Confirm Netflix payroll routing to Chase checking",
+      "time": "10:00",
+      "duration": 15,
+      "notes": "Verify $2,250/paycheck hits Chase 9691, not Wealthfront",
+      "priority": "high"
+    }
+  ]
+}

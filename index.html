@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day Planner</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0f0f0f;
+      --card: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --text-muted: #555;
+      --text-secondary: #888;
+      --blue: #3b82f6;
+      --blue-dim: rgba(59, 130, 246, 0.12);
+      --amber: #f59e0b;
+      --amber-dim: rgba(245, 158, 11, 0.1);
+      --red: #ef4444;
+      --green: #22c55e;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 0 80px;
+    }
+
+    /* ── Header ── */
+    .header {
+      padding: 48px 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-date {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .header-greeting {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .header-summary {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .summary-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      margin-right: 7px;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    /* ── Unscheduled Tasks Section ── */
+    .unscheduled-section {
+      padding: 20px 20px 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      padding: 8px 0;
+    }
+
+    .hour-slot {
+      display: flex;
+      align-items: flex-start;
+      padding: 0 20px;
+      min-height: 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hour-slot.has-items {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      min-height: auto;
+    }
+
+    .hour-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      width: 44px;
+      flex-shrink: 0;
+      padding-top: 18px;
+      letter-spacing: 0.02em;
+    }
+
+    .hour-slot.has-items .hour-label {
+      padding-top: 6px;
+    }
+
+    .hour-items {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hour-line {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+      margin: 0 14px 0 0;
+      flex-shrink: 0;
+      min-height: 56px;
+    }
+
+    .hour-slot.has-items .hour-line {
+      min-height: auto;
+    }
+
+    /* ── Item Cards ── */
+    .item-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .item-card.event {
+      border-left: 3px solid var(--blue);
+      background: var(--blue-dim);
+    }
+
+    .item-card.task-high {
+      border-left: 3px solid var(--amber);
+      background: var(--amber-dim);
+    }
+
+    .item-card.task-normal {
+      border-left: 3px solid var(--border);
+    }
+
+    .item-card.task-done {
+      opacity: 0.45;
+    }
+
+    .item-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Checkbox */
+    .task-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .task-check:checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .task-check:checked::after {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 9px;
+      border: 2px solid white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    .task-high .task-check {
+      border-color: var(--amber);
+    }
+
+    .item-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      flex: 1;
+      line-height: 1.3;
+    }
+
+    .item-card.task-done .item-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .item-duration {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .item-priority {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    .item-notes {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      line-height: 1.4;
+      padding-left: 30px;
+    }
+
+    .event-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 32px 20px 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Empty state ── */
+    .empty-hour {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      height: 40px;
+      border-bottom: 1px solid transparent;
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .error {
+      margin: 24px 20px;
+      padding: 16px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--red);
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="loading">Loading your day…</div>
+  </div>
+
+  <script>
+    const START_HOUR = 5;
+    const END_HOUR = 22; // 10pm
+
+    function formatDate(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    }
+
+    function formatUpdated(isoStr) {
+      const date = new Date(isoStr);
+      return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    }
+
+    function getGreeting() {
+      const h = new Date().getHours();
+      if (h < 12) return 'Good morning, Derek.';
+      if (h < 17) return 'Good afternoon, Derek.';
+      return 'Good evening, Derek.';
+    }
+
+    function formatHour(h) {
+      if (h === 0) return '12am';
+      if (h < 12) return `${h}am`;
+      if (h === 12) return '12pm';
+      return `${h - 12}pm`;
+    }
+
+    function getItemHour(item) {
+      if (!item.time) return null;
+      return parseInt(item.time.split(':')[0], 10);
+    }
+
+    function getStorageKey(date, id) {
+      return `dp:${date}:${id}`;
+    }
+
+    function isTaskDone(date, id) {
+      return localStorage.getItem(getStorageKey(date, id)) === '1';
+    }
+
+    function setTaskDone(date, id, done) {
+      if (done) {
+        localStorage.setItem(getStorageKey(date, id), '1');
+      } else {
+        localStorage.removeItem(getStorageKey(date, id));
+      }
+    }
+
+    function renderEventIcon() {
+      return `<div class="event-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="2" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M4 1v2M10 1v2M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>`;
+    }
+
+    function renderItem(item, date) {
+      const isEvent = item.type === 'event';
+      const isHigh = item.priority === 'high';
+      const done = !isEvent && isTaskDone(date, item.id);
+
+      let cardClass = 'item-card';
+      if (isEvent) cardClass += ' event';
+      else if (isHigh) cardClass += ' task-high';
+      else cardClass += ' task-normal';
+      if (done) cardClass += ' task-done';
+
+      const durationText = item.duration ? `${item.duration} min` : '';
+
+      let headerInner = '';
+      if (isEvent) {
+        headerInner = `
+          ${renderEventIcon()}
+          <span class="item-title">${item.title}</span>
+        `;
+      } else {
+        headerInner = `
+          <input type="checkbox" class="task-check" data-id="${item.id}" data-date="${date}" ${done ? 'checked' : ''} aria-label="${item.title}"/>
+          <span class="item-title">${item.title}</span>
+        `;
+      }
+
+      const metaParts = [];
+      if (durationText) metaParts.push(`<span class="item-duration">${durationText}</span>`);
+      if (isHigh) metaParts.push(`<span class="item-priority">High</span>`);
+
+      const metaHtml = metaParts.length ? `<div class="item-meta" style="padding-left:${isEvent ? '0' : '30px'}">${metaParts.join('')}</div>` : '';
+      const notesHtml = item.notes ? `<div class="item-notes">${item.notes}</div>` : '';
+
+      return `
+        <div class="${cardClass}" data-id="${item.id}">
+          <div class="item-header">${headerInner}</div>
+          ${metaHtml}
+          ${notesHtml}
+        </div>
+      `;
+    }
+
+    function renderTimeline(items, date) {
+      let html = '<div class="timeline">';
+
+      for (let h = START_HOUR; h < END_HOUR; h++) {
+        const hourItems = items.filter(i => getItemHour(i) === h);
+        const hasItems = hourItems.length > 0;
+
+        html += `<div class="hour-slot${hasItems ? ' has-items' : ''}">`;
+        html += `<div class="hour-label">${formatHour(h)}</div>`;
+        html += `<div class="hour-line"></div>`;
+        html += `<div class="hour-items">`;
+
+        for (const item of hourItems) {
+          html += renderItem(item, date);
+        }
+
+        html += `</div></div>`;
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    function render(data) {
+      const app = document.getElementById('app');
+      const scheduled = data.items.filter(i => i.time);
+      const unscheduled = data.items.filter(i => !i.time);
+      const updatedTime = formatUpdated(data.updated);
+
+      let html = '';
+
+      // Header
+      html += `
+        <header class="header">
+          <div class="header-date">${formatDate(data.date)}</div>
+          <div class="header-greeting">${getGreeting()}</div>
+          <div class="header-summary">
+            <span class="summary-dot"></span>${data.summary}
+          </div>
+        </header>
+      `;
+
+      // Unscheduled tasks
+      if (unscheduled.length > 0) {
+        html += `<div class="unscheduled-section">`;
+        html += `<div class="section-label">Today's Tasks</div>`;
+        for (const item of unscheduled) {
+          html += renderItem(item, data.date);
+        }
+        html += `</div>`;
+      }
+
+      // Timeline
+      html += renderTimeline(scheduled, data.date);
+
+      // Footer
+      html += `
+        <footer class="footer">
+          Built with AI &middot; Updated ${updatedTime}
+        </footer>
+      `;
+
+      app.innerHTML = html;
+
+      // Wire up checkboxes
+      app.querySelectorAll('.task-check').forEach(cb => {
+        cb.addEventListener('change', e => {
+          const { id, date } = e.target.dataset;
+          setTaskDone(date, id, e.target.checked);
+          const card = e.target.closest('.item-card');
+          if (e.target.checked) {
+            card.classList.add('task-done');
+          } else {
+            card.classList.remove('task-done');
+          }
+        });
+      });
+    }
+
+    async function init() {
+      try {
+        const res = await fetch('./public/schedule.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        render(data);
+      } catch (err) {
+        document.getElementById('app').innerHTML = `
+          <header class="header">
+            <div class="header-date">${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
+            <div class="header-greeting">${getGreeting()}</div>
+          </header>
+          <div class="error">
+            Couldn't load schedule.json. Make sure you're running this from a server (not file://).<br><br>
+            <code>${err.message}</code>
+          </div>
+        `;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
