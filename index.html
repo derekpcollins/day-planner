@@ -70,6 +70,31 @@
       color: var(--text-secondary);
     }
 
+    .header-weather {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .weather-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .weather-temp {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .weather-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
     .summary-dot {
       display: inline-block;
       width: 6px;
@@ -329,6 +354,49 @@
       return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
     }
 
+    // Weather: Open-Meteo, Lakewood OH (41.4820° N, 81.7982° W)
+    const WMO_ICONS = {
+      0: ['☀️', 'Clear'],
+      1: ['🌤️', 'Mostly clear'],
+      2: ['⛅', 'Partly cloudy'],
+      3: ['☁️', 'Overcast'],
+      45: ['🌫️', 'Fog'],
+      48: ['🌫️', 'Freezing fog'],
+      51: ['🌦️', 'Light drizzle'],
+      53: ['🌦️', 'Drizzle'],
+      55: ['🌧️', 'Heavy drizzle'],
+      61: ['🌧️', 'Light rain'],
+      63: ['🌧️', 'Rain'],
+      65: ['🌧️', 'Heavy rain'],
+      71: ['🌨️', 'Light snow'],
+      73: ['🌨️', 'Snow'],
+      75: ['❄️', 'Heavy snow'],
+      77: ['🌨️', 'Snow grains'],
+      80: ['🌦️', 'Showers'],
+      81: ['🌧️', 'Showers'],
+      82: ['⛈️', 'Heavy showers'],
+      85: ['🌨️', 'Snow showers'],
+      86: ['❄️', 'Heavy snow showers'],
+      95: ['⛈️', 'Thunderstorm'],
+      96: ['⛈️', 'Thunderstorm w/ hail'],
+      99: ['⛈️', 'Thunderstorm w/ hail'],
+    };
+
+    async function fetchWeather() {
+      try {
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=41.482&longitude=-81.7982&current=temperature_2m,weathercode&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York';
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        const temp = Math.round(data.current.temperature_2m);
+        const code = data.current.weathercode;
+        const [icon, desc] = WMO_ICONS[code] || ['🌡️', 'Unknown'];
+        return { temp, icon, desc };
+      } catch {
+        return null;
+      }
+    }
+
     function getGreeting() {
       const h = new Date().getHours();
       if (h < 12) return 'Good morning, Derek.';
@@ -438,7 +506,7 @@
       return html;
     }
 
-    function render(data) {
+    function render(data, weather) {
       const app = document.getElementById('app');
       const scheduled = data.items.filter(i => i.time);
       const unscheduled = data.items.filter(i => !i.time);
@@ -446,12 +514,22 @@
 
       let html = '';
 
+      // Weather
+      const weatherHtml = weather
+        ? `<div class="header-weather">
+            <span class="weather-icon">${weather.icon}</span>
+            <span class="weather-temp">${weather.temp}°F</span>
+            <span class="weather-desc">${weather.desc}</span>
+           </div>`
+        : '';
+
       // Header
       html += `
         <header class="header">
           <div class="header-date">${formatDate(data.date)}</div>
           <div class="header-greeting">${getGreeting()}</div>
-          <div class="header-summary">
+          ${weatherHtml}
+          <div class="header-summary" style="margin-top:8px">
             <span class="summary-dot"></span>${data.summary}
           </div>
         </header>
@@ -496,10 +574,13 @@
 
     async function init() {
       try {
-        const res = await fetch('./public/schedule.json');
+        const [res, weather] = await Promise.all([
+          fetch('./public/schedule.json'),
+          fetchWeather()
+        ]);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        render(data);
+        render(data, weather);
       } catch (err) {
         document.getElementById('app').innerHTML = `
           <header class="header">
