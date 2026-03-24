@@ -4,8 +4,17 @@
   "summary": "3 tasks",
   "items": [
     { "id": "r1", "type": "routine", "title": "Wake up", "time": "06:00", "icon": "☀️" },
-    { "id": "r2", "type": "routine", "title": "Meds & supplements", "time": "06:00", "icon": "💊" },
-    { "id": "r3", "type": "routine", "title": "Shower, skincare, brush & floss", "time": "06:30", "icon": "🚿" },
+    { "id": "r2", "type": "routine", "title": "Meds & supplements", "time": "06:00", "icon": "💊", "details": ["Supplements — list TBD (add your stack here)", "Take with water"] },
+    { "id": "r3", "type": "routine", "title": "Shower, skincare, brush & floss", "time": "06:30", "icon": "🚿", "details": [
+      "1. Cleanse — Neutrogena Ultra Gentle Daily Cleanser",
+      "2. Eye — The Ordinary Caffeine Solution 5% + EGCG (1-2 drops, orbital bone)",
+      "3. Hydrate — The Ordinary Hyaluronic Acid 2% + B5 (damp face)",
+      "4. Protect — Rose Hip Seed Oil (2-3 drops)",
+      "5. Moisturize — The Ordinary NMF + HA",
+      "6. SPF — CeraVe Hydrating Sheer Sunscreen SPF 30",
+      "7. Lip — Jack Black Intense Therapy Lip Balm SPF 25",
+      "Oral: Brush → Floss (Oral-B Glide) → Rinse (Crest Deep Cleanse)"
+    ]},
     { "id": "r4", "type": "routine", "title": "Empty dishwasher, breakfast with kids", "time": "07:00", "icon": "👨‍👧" },
     { "id": "r5", "type": "routine", "title": "Erin leaves — Jack (school) + Cian (gym childcare)", "time": "08:50", "icon": "🚗" },
     { "id": "2", "type": "task", "title": "Remove Fidelity Visa from Apple Pay", "time": "09:00", "duration": 15, "notes": "Settings → Wallet & Apple Pay", "priority": "high" },
@@ -17,7 +26,15 @@
     { "id": "r10", "type": "routine", "title": "Dinner + family time", "time": "18:00", "icon": "🍽️" },
     { "id": "r11", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "😴" },
     { "id": "r12", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "😴" },
-    { "id": "r13", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🌙" },
+    { "id": "r13", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🌙", "details": [
+      "1. Cleanse — Neutrogena Ultra Gentle Daily Cleanser",
+      "2. Active — Retinol + Vitamin C Cream (pea-sized, wait 15-20 min)",
+      "3. Optional — Niacinamide 10% + Zinc 1% (2-3x/week)",
+      "4. Eye — Multi-Peptide Eye Serum (tap around orbital bone)",
+      "5. Moisturize — The Ordinary NMF + HA",
+      "6. Optional — CeraVe Skin Renewing Night Cream (2-3x/week rotation)",
+      "Oral: Brush → Floss (Oral-B Glide) → Rinse (Crest Deep Cleanse)"
+    ]},
     { "id": "r14", "type": "routine", "title": "Wind down — reading, no screens", "time": "21:30", "icon": "📖" },
     { "id": "r15", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "🛌" }
   ]
