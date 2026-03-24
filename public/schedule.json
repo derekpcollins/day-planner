@@ -4,7 +4,7 @@
   "summary": "3 tasks",
   "items": [
     { "id": "r1", "type": "routine", "title": "Wake up", "time": "06:00", "icon": "☀️" },
-    { "id": "r2", "type": "routine", "title": "Meds & supplements", "time": "06:00", "icon": "💊", "details": ["Supplements — list TBD (add your stack here)", "Take with water"] },
+    { "id": "r2", "type": "routine", "title": "Meds & supplements", "time": "06:00", "icon": "💊", "details": ["Lexapro", "Wellbutrin XL", "Take with water"] },
     { "id": "r3", "type": "routine", "title": "Shower, skincare, brush & floss", "time": "06:30", "icon": "🚿", "details": [
       "1. Cleanse — Neutrogena Ultra Gentle Daily Cleanser",
       "2. Eye — The Ordinary Caffeine Solution 5% + EGCG (1-2 drops, orbital bone)",
@@ -27,6 +27,8 @@
     { "id": "r11", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "😴" },
     { "id": "r12", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "😴" },
     { "id": "r13", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🌙", "details": [
+      "Crestor", "Ritual Men's Multivitamin", "Ritual Probiotic", "Ritual Melatonin", "Fish Oil",
+      "—",
       "1. Cleanse — Neutrogena Ultra Gentle Daily Cleanser",
       "2. Active — Retinol + Vitamin C Cream (pea-sized, wait 15-20 min)",
       "3. Optional — Niacinamide 10% + Zinc 1% (2-3x/week)",
