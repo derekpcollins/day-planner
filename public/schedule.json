@@ -3,40 +3,18 @@
   "updated": "2026-03-24T07:00:00",
   "summary": "3 tasks · 1 event",
   "items": [
-    {
-      "id": "1",
-      "type": "event",
-      "title": "Workout with trainer",
-      "time": "09:00",
-      "duration": 60,
-      "notes": ""
-    },
-    {
-      "id": "2",
-      "type": "task",
-      "title": "Remove Fidelity Visa from Apple Pay",
-      "time": "08:00",
-      "duration": 15,
-      "notes": "Settings → Wallet & Apple Pay",
-      "priority": "high"
-    },
-    {
-      "id": "3",
-      "type": "task",
-      "title": "Cancel Houseplant auto-ship",
-      "time": "08:00",
-      "duration": 10,
-      "notes": "houseplant.com — saves $150/mo",
-      "priority": "high"
-    },
-    {
-      "id": "4",
-      "type": "task",
-      "title": "Confirm Netflix payroll routing to Chase checking",
-      "time": "10:00",
-      "duration": 15,
-      "notes": "Verify $2,250/paycheck hits Chase 9691, not Wealthfront",
-      "priority": "high"
-    }
+    { "id": "r1", "type": "routine", "title": "Wake up", "time": "05:00", "icon": "☀️" },
+    { "id": "r2", "type": "routine", "title": "Morning with kids — breakfast, get dressed, pack lunch", "time": "05:00", "icon": "👨‍👧" },
+    { "id": "r3", "type": "routine", "title": "Erin leaves with Jack & Cian", "time": "08:00", "icon": "🚗" },
+    { "id": "1", "type": "event", "title": "Workout with trainer", "time": "09:00", "duration": 60, "notes": "" },
+    { "id": "2", "type": "task", "title": "Remove Fidelity Visa from Apple Pay", "time": "08:00", "duration": 15, "notes": "Settings → Wallet & Apple Pay", "priority": "high" },
+    { "id": "3", "type": "task", "title": "Cancel Houseplant auto-ship", "time": "08:00", "duration": 10, "notes": "houseplant.com — saves $150/mo", "priority": "high" },
+    { "id": "4", "type": "task", "title": "Confirm Netflix payroll routing to Chase checking", "time": "10:00", "duration": 15, "notes": "Verify $2,250/paycheck hits Chase 9691, not Wealthfront", "priority": "high" },
+    { "id": "r4", "type": "routine", "title": "Work", "time": "11:00", "icon": "💻" },
+    { "id": "r5", "type": "routine", "title": "Dinner + family time", "time": "18:00", "icon": "🍽️" },
+    { "id": "r6", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "😴" },
+    { "id": "r7", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "😴" },
+    { "id": "r8", "type": "routine", "title": "Evening wind-down", "time": "21:00", "icon": "🌙" },
+    { "id": "r9", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "🛌" }
   ]
 }
