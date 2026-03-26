@@ -430,6 +430,17 @@
       letter-spacing: 0.03em;
     }
 
+    /* ── Current hour highlight ── */
+    .hour-slot.current-hour .hour-label {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .hour-slot.current-hour .hour-line {
+      background: var(--blue);
+      opacity: 0.6;
+    }
+
     /* ── Empty state ── */
     .empty-hour {
       display: flex;
@@ -636,12 +647,18 @@
 
     function renderTimeline(items, date) {
       let html = '<div class="timeline">';
+      const currentHour = new Date().getHours();
 
       for (let h = START_HOUR; h < END_HOUR; h++) {
         const hourItems = items.filter(i => getItemHour(i) === h);
         const hasItems = hourItems.length > 0;
+        const isCurrent = h === currentHour;
 
-        html += `<div class="hour-slot${hasItems ? ' has-items' : ''}">`;
+        let slotClasses = 'hour-slot';
+        if (hasItems) slotClasses += ' has-items';
+        if (isCurrent) slotClasses += ' current-hour';
+
+        html += `<div class="${slotClasses}" id="hour-${h}">`;
         html += `<div class="hour-label">${formatHour(h)}</div>`;
         html += `<div class="hour-line"></div>`;
         html += `<div class="hour-items">`;
@@ -659,6 +676,7 @@
 
     function render(data, weather) {
       const app = document.getElementById('app');
+      // items already filtered by API (workoutDaysOnly handled server-side)
       const scheduled = data.items.filter(i => i.time);
       const unscheduled = data.items.filter(i => !i.time);
       const updatedTime = formatUpdated(data.updated);
@@ -753,13 +771,28 @@
 
     async function init() {
       try {
+        // Build API URL — supports optional ?date=YYYY-MM-DD override
+        const params = new URLSearchParams(window.location.search);
+        const dateParam = params.get('date');
+        const apiUrl = dateParam ? `/api/schedule?date=${dateParam}` : '/api/schedule';
+
         const [res, weather] = await Promise.all([
-          fetch('./public/schedule.json'),
+          fetch(apiUrl),
           fetchWeather()
         ]);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          throw new Error(body.error || `HTTP ${res.status}`);
+        }
         const data = await res.json();
         render(data, weather);
+
+        // Auto-scroll to the current hour block
+        const currentHour = new Date().getHours();
+        const currentSlot = document.getElementById(`hour-${currentHour}`);
+        if (currentSlot) {
+          setTimeout(() => currentSlot.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
       } catch (err) {
         document.getElementById('app').innerHTML = `
           <header class="header">
@@ -767,7 +800,7 @@
             <div class="header-greeting">${getGreeting()}</div>
           </header>
           <div class="error">
-            Couldn't load schedule.json. Make sure you're running this from a server (not file://).<br><br>
+            Couldn't load schedule. Make sure you're running this from a server (not file://).<br><br>
             <code>${err.message}</code>
           </div>
         `;

@@ -1,6 +1,6 @@
 # Day Planner
 
-A clean, minimal dark-mode daily schedule app for Derek. Opens with a morning briefing — time blocks, tasks, and events — all pulled from a single JSON file.
+A clean, minimal dark-mode daily schedule app for Derek. Opens with a morning briefing — time blocks, tasks, and events — all pulled from a serverless API backed by a static JSON file.
 
 ## What it does
 
@@ -10,34 +10,69 @@ A clean, minimal dark-mode daily schedule app for Derek. Opens with a morning br
 - **Tasks** (reminders) — checkable, with state saved to localStorage (resets each day)
 - High-priority tasks get an amber accent
 - Unscheduled tasks appear at the top in a "Today's Tasks" section
-- Reads from `public/schedule.json` — swap it out to update the day
+- Current hour is highlighted in blue and auto-scrolled to on load
+- Workout items (tagged `workoutDaysOnly`) only appear on Mon/Wed/Fri
+- Fetches from `/api/schedule` — Colossus updates `schedules/today.json` nightly
+
+## Architecture
+
+```
+index.html           — Frontend (vanilla JS, no framework)
+api/schedule.js      — Vercel serverless function (GET /api/schedule)
+schedules/today.json — Today's schedule data (managed by Colossus)
+public/schedule.json — Legacy static file (no longer used)
+```
+
+### API
+
+**`GET /api/schedule`**
+
+Optional query param: `?date=YYYY-MM-DD` (defaults to `data.date` in today.json)
+
+Response:
+```json
+{
+  "date": "2026-03-26",
+  "dayOfWeek": "Thursday",
+  "isWorkoutDay": false,
+  "summary": "2 tasks",
+  "updated": "2026-03-26T07:00:00",
+  "items": [...]
+}
+```
 
 ## Run locally
 
-No build step needed. Just serve it:
+No build step needed. Use the Vercel CLI for full local API support:
 
 ```bash
-# Python (built-in):
+npm i -g vercel
 cd day-planner
-python3 -m http.server 8080
-# Open http://localhost:8080
+vercel dev
+# Open http://localhost:3000
 ```
 
-Or use the VS Code Live Server extension, `npx serve .`, or any static file server.
+Or with Python (static only — API won't work):
+```bash
+python3 -m http.server 8080
+```
 
-> ⚠️ Don't open `index.html` directly via `file://` — the `fetch()` call will fail due to CORS. Use a local server.
+> ⚠️ Don't open `index.html` directly via `file://` — the `fetch()` call will fail due to CORS.
 
 ## Update the schedule
 
-Edit `public/schedule.json` and push to GitHub — Vercel auto-deploys.
+Colossus manages `schedules/today.json` automatically each morning. To manually update:
 
-### schedule.json format
+1. Edit `schedules/today.json`
+2. Push to GitHub — Vercel auto-deploys
+
+### schedules/today.json format
 
 ```json
 {
   "date": "YYYY-MM-DD",
   "updated": "YYYY-MM-DDTHH:MM:SS",
-  "summary": "3 tasks · 1 event",
+  "summary": "3 tasks · Workout day",
   "items": [
     {
       "id": "unique-id",
@@ -55,15 +90,37 @@ Edit `public/schedule.json` and push to GitHub — Vercel auto-deploys.
       "duration": 15,
       "notes": "Optional notes",
       "priority": "high"
+    },
+    {
+      "id": "workout",
+      "type": "event",
+      "title": "Workout @ ASAP Fitness",
+      "time": "09:00",
+      "duration": 60,
+      "workoutDaysOnly": true
     }
   ]
 }
 ```
 
-- `type`: `"event"` or `"task"`
-- `time`: 24h format (`"09:00"`) — omit for unscheduled tasks
-- `duration`: minutes (optional)
-- `priority`: `"high"` for amber accent (tasks only)
+### Field reference
+
+| Field | Values | Notes |
+|---|---|---|
+| `type` | `event`, `task`, `routine` | Controls rendering style |
+| `time` | `"09:00"` (24h) | Omit for unscheduled tasks |
+| `duration` | minutes | Optional |
+| `priority` | `"high"` | Amber accent (tasks only) |
+| `workoutDaysOnly` | `true` | Hidden on Tue/Thu/Sat/Sun |
+| `icon` | emoji string | Shown on routine items |
+| `details` | `["step 1", "step 2"]` | Expandable list (routines only) |
+
+### Workout days
+
+The API automatically filters items with `workoutDaysOnly: true` on non-workout days.
+
+Workout days: **Monday, Wednesday, Friday**
+Non-workout days: Tuesday, Thursday, Saturday, Sunday
 
 ## Deploy to Vercel
 
@@ -75,4 +132,4 @@ Or connect the GitHub repo in the Vercel dashboard — it'll auto-deploy on ever
 
 ---
 
-*Built with AI*
+*Built with Colossus (AI)*

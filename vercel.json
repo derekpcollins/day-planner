@@ -1,6 +1,12 @@
 {
   "outputDirectory": ".",
+  "functions": {
+    "api/schedule.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
+    { "source": "/api/schedule", "destination": "/api/schedule" },
     { "source": "/(.*)", "destination": "/$1" }
   ]
 }
