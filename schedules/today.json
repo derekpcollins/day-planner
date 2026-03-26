@@ -15,7 +15,7 @@
     { "id": "r10", "type": "routine", "title": "Dinner + family time", "time": "18:00", "icon": "🍽️" },
     { "id": "r11", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "😴" },
     { "id": "r12", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "🛏️" },
-    { "id": "1", "type": "task", "title": "Put garbage & recycling bins out", "time": "20:30", "duration": 10, "priority": "high" },
+    { "id": "bin-in", "type": "task", "title": "Bring garbage & recycling bins back in", "time": "17:00", "duration": 10, "priority": "high" },
     { "id": "r13", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🧴" },
     { "id": "r14", "type": "routine", "title": "Wind down (reading, no screens)", "time": "21:30", "icon": "📖" },
     { "id": "r15", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "💤" }
