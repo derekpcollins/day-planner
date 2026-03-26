@@ -1,12 +1,13 @@
 {
+  "buildCommand": "echo 'Static build'",
   "outputDirectory": ".",
   "functions": {
-    "api/schedule.js": {
+    "api/**/*.js": {
       "runtime": "nodejs20.x"
     }
   },
   "rewrites": [
-    { "source": "/api/schedule", "destination": "/api/schedule" },
+    { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/$1" }
   ]
 }
