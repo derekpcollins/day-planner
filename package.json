@@ -4,7 +4,6 @@
   "description": "Daily planner and schedule viewer",
   "main": "index.html",
   "scripts": {
-    "dev": "vercel dev",
     "build": "echo 'Static site with serverless function'"
   }
 }
