@@ -44,30 +44,20 @@
 
     /* ── Header ── */
     .header {
-      padding: 48px 20px 24px;
-      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
       background: var(--bg);
-      transition: padding 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
-    }
-
-    .header.compact {
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(15,15,15,0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      min-height: 120px;
+      overflow: hidden;
       border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
     }
 
     .header-full {
-      max-height: 200px;
-      overflow: hidden;
-      transition: max-height 0s;
+      padding: 0 20px 16px;
     }
 
     .compact-bar {
@@ -75,10 +65,10 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
+      height: 48px;
+      flex-shrink: 0;
+      padding: 0 20px;
       font-size: 14px;
-      opacity: 0;
-      transition: opacity 0s;
-      pointer-events: none;
     }
 
     .compact-day {
@@ -202,7 +192,7 @@
       padding-top: 18px;
       letter-spacing: 0.02em;
       position: sticky;
-      top: 48px;
+      top: 48px; /* collapsed header height */
       align-self: flex-start;
     }
 
@@ -754,33 +744,15 @@
         });
       });
 
-      // Smooth header collapse on scroll (continuous animation)
+      // Smooth header collapse on scroll — single animated property: min-height
       const header = document.getElementById('main-header');
-      const headerFull = header.querySelector('.header-full');
-      const compactBar = header.querySelector('.compact-bar');
-      
+      const EXPANDED_HEIGHT = 120;
+      const COLLAPSED_HEIGHT = 48;
+
       window.addEventListener('scroll', () => {
-        // Continuous collapse: scrollY 0–120px
-        // At 0px: full header visible, compact bar hidden
-        // At 120px: full header gone, compact bar visible
-        const scrollY = window.scrollY;
-        const collapseRange = 120;
-        const progress = Math.min(scrollY / collapseRange, 1); // 0 to 1
-
-        // Collapse full header via max-height
-        headerFull.style.maxHeight = (200 - 200 * progress) + 'px';
-        headerFull.style.pointerEvents = progress > 0.5 ? 'none' : 'auto';
-
-        // Fade in compact bar via opacity only
-        compactBar.style.opacity = progress;
-        compactBar.style.pointerEvents = progress < 0.5 ? 'none' : 'auto';
-
-        // Toggle compact class for blur/bg changes only
-        if (progress >= 0.5) {
-          header.classList.add('compact');
-        } else {
-          header.classList.remove('compact');
-        }
+        const progress = Math.min(window.scrollY / EXPANDED_HEIGHT, 1); // 0→1 over 120px
+        const height = EXPANDED_HEIGHT - (EXPANDED_HEIGHT - COLLAPSED_HEIGHT) * progress;
+        header.style.minHeight = height + 'px';
       }, { passive: true });
     }
 
