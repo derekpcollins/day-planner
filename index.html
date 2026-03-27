@@ -50,12 +50,11 @@
       top: 0;
       z-index: 100;
       background: var(--bg);
-      transition: padding 0.2s ease, height 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
+      transition: padding 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
     }
 
     .header.compact {
       padding: 0 20px;
-      height: 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -787,7 +786,13 @@
         compactBar.style.transform = `scale(${compactScale})`;
         compactBar.style.pointerEvents = progress < 0.5 ? 'none' : 'auto';
         
-        // Toggle compact class at 50% progress (60px) for structural changes
+        // Smooth height interpolation (JS-driven, no CSS jump)
+        const minHeight = 48;
+        const maxHeight = 120;
+        const headerHeight = maxHeight - (maxHeight - minHeight) * progress;
+        header.style.height = headerHeight + 'px';
+
+        // Toggle compact class at 50% progress (60px) for blur/bg changes only
         if (progress >= 0.5) {
           header.classList.add('compact');
         } else {
