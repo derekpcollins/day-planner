@@ -50,7 +50,7 @@
       top: 0;
       z-index: 100;
       background: var(--bg);
-      transition: padding 0.25s ease, height 0.25s ease, background 0.25s ease;
+      transition: padding 0.2s ease, height 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
     }
 
     .header.compact {
@@ -66,23 +66,25 @@
     }
 
     .header-full {
-      /* wrapper for full header content */
-    }
-
-    .header.compact .header-full {
-      display: none;
+      /* opacity/transform driven by scroll JS */
+      opacity: 1;
+      transform: scale(1);
+      transform-origin: top left;
+      will-change: opacity, transform;
     }
 
     .compact-bar {
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
       font-size: 14px;
-    }
-
-    .header.compact .compact-bar {
-      display: flex;
+      /* initial state: hidden, driven by scroll JS */
+      opacity: 0;
+      transform: scale(0.85);
+      transform-origin: top right;
+      will-change: opacity, transform;
+      pointer-events: none;
     }
 
     .compact-day {
@@ -758,10 +760,35 @@
         });
       });
 
-      // Sticky header scroll behavior
+      // Smooth header collapse on scroll (continuous animation)
       const header = document.getElementById('main-header');
+      const headerFull = header.querySelector('.header-full');
+      const compactBar = header.querySelector('.compact-bar');
+      
       window.addEventListener('scroll', () => {
-        if (window.scrollY > 60) {
+        // Continuous collapse: scrollY 0–120px
+        // At 0px: full header (opacity 1, scale 1)
+        // At 120px: compact header (opacity 0, scale 0)
+        const scrollY = window.scrollY;
+        const collapseRange = 120; // pixels to collapse over
+        const progress = Math.min(scrollY / collapseRange, 1); // 0 to 1
+        
+        // Full header opacity and scale
+        const fullOpacity = 1 - progress;
+        const fullScale = 1 - progress * 0.15; // slight scale down
+        headerFull.style.opacity = fullOpacity;
+        headerFull.style.transform = `scale(${fullScale})`;
+        headerFull.style.pointerEvents = progress > 0.5 ? 'none' : 'auto';
+        
+        // Compact bar opacity and scale (reverse)
+        const compactOpacity = progress;
+        const compactScale = 0.85 + progress * 0.15;
+        compactBar.style.opacity = compactOpacity;
+        compactBar.style.transform = `scale(${compactScale})`;
+        compactBar.style.pointerEvents = progress < 0.5 ? 'none' : 'auto';
+        
+        // Toggle compact class at 50% progress (60px) for structural changes
+        if (progress >= 0.5) {
           header.classList.add('compact');
         } else {
           header.classList.remove('compact');
