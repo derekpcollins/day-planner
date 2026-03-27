@@ -65,11 +65,9 @@
     }
 
     .header-full {
-      /* opacity/transform driven by scroll JS */
-      opacity: 1;
-      transform: scale(1);
-      transform-origin: top left;
-      will-change: opacity, transform;
+      max-height: 200px;
+      overflow: hidden;
+      transition: max-height 0s;
     }
 
     .compact-bar {
@@ -78,11 +76,8 @@
       justify-content: space-between;
       width: 100%;
       font-size: 14px;
-      /* initial state: hidden, driven by scroll JS */
       opacity: 0;
-      transform: scale(0.85);
-      transform-origin: top right;
-      will-change: opacity, transform;
+      transition: opacity 0s;
       pointer-events: none;
     }
 
@@ -766,33 +761,21 @@
       
       window.addEventListener('scroll', () => {
         // Continuous collapse: scrollY 0–120px
-        // At 0px: full header (opacity 1, scale 1)
-        // At 120px: compact header (opacity 0, scale 0)
+        // At 0px: full header visible, compact bar hidden
+        // At 120px: full header gone, compact bar visible
         const scrollY = window.scrollY;
-        const collapseRange = 120; // pixels to collapse over
+        const collapseRange = 120;
         const progress = Math.min(scrollY / collapseRange, 1); // 0 to 1
-        
-        // Full header opacity and scale
-        const fullOpacity = 1 - progress;
-        const fullScale = 1 - progress * 0.15; // slight scale down
-        headerFull.style.opacity = fullOpacity;
-        headerFull.style.transform = `scale(${fullScale})`;
-        headerFull.style.pointerEvents = progress > 0.5 ? 'none' : 'auto';
-        
-        // Compact bar opacity and scale (reverse)
-        const compactOpacity = progress;
-        const compactScale = 0.85 + progress * 0.15;
-        compactBar.style.opacity = compactOpacity;
-        compactBar.style.transform = `scale(${compactScale})`;
-        compactBar.style.pointerEvents = progress < 0.5 ? 'none' : 'auto';
-        
-        // Smooth height interpolation (JS-driven, no CSS jump)
-        const minHeight = 48;
-        const maxHeight = 120;
-        const headerHeight = maxHeight - (maxHeight - minHeight) * progress;
-        header.style.height = headerHeight + 'px';
 
-        // Toggle compact class at 50% progress (60px) for blur/bg changes only
+        // Collapse full header via max-height
+        headerFull.style.maxHeight = (200 - 200 * progress) + 'px';
+        headerFull.style.pointerEvents = progress > 0.5 ? 'none' : 'auto';
+
+        // Fade in compact bar via opacity only
+        compactBar.style.opacity = progress;
+        compactBar.style.pointerEvents = progress < 0.5 ? 'none' : 'auto';
+
+        // Toggle compact class for blur/bg changes only
         if (progress >= 0.5) {
           header.classList.add('compact');
         } else {
