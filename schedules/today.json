@@ -1,23 +1,142 @@
 {
-  "date": "2026-03-26",
-  "updated": "2026-03-26T07:00:00",
-  "summary": "1 task · Workout day",
+  "date": "2026-03-28",
+  "updated": "2026-03-27T23:12:07.902Z",
+  "summary": "3 tasks",
   "items": [
-    { "id": "r1", "type": "routine", "title": "Wake up · Meds & supplements", "time": "06:00", "icon": "🌅" },
-    { "id": "r2", "type": "routine", "title": "Shower, skincare, brush & floss", "time": "06:30", "icon": "🚿" },
-    { "id": "r3", "type": "routine", "title": "Empty dishwasher & breakfast with kids", "time": "07:00", "icon": "🍳" },
-    { "id": "r4", "type": "routine", "title": "Erin leaves (Jack to school, Cian to gym)", "time": "08:50", "icon": "👋" },
-    { "id": "r5", "type": "event", "title": "Workout @ ASAP Fitness", "time": "09:00", "duration": 60, "workoutDaysOnly": true },
-    { "id": "r6", "type": "event", "title": "Vitality Bowl — Warrior Açaí", "time": "10:00", "duration": 15, "workoutDaysOnly": true },
-    { "id": "r7", "type": "routine", "title": "Start work", "time": "11:00", "icon": "💼" },
-    { "id": "r8", "type": "routine", "title": "Jack school pickup", "time": "15:00", "icon": "🚗" },
-    { "id": "r9", "type": "routine", "title": "Wrap work", "time": "17:30", "icon": "✋" },
-    { "id": "r10", "type": "routine", "title": "Dinner + family time", "time": "18:00", "icon": "🍽️" },
-    { "id": "r11", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "😴" },
-    { "id": "r12", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "🛏️" },
-    { "id": "bin-in", "type": "task", "title": "Bring garbage & recycling bins back in", "time": "17:00", "duration": 10, "priority": "high" },
-    { "id": "r13", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🧴" },
-    { "id": "r14", "type": "routine", "title": "Wind down (reading, no screens)", "time": "21:30", "icon": "📖" },
-    { "id": "r15", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "💤" }
+    {
+      "id": "task-C55BACC8-8FCA-4867-B6ED-4E9FEFDAC344",
+      "type": "task",
+      "title": "Review Royalty Roofing proposal and respond",
+      "time": "00:00",
+      "duration": 15
+    },
+    {
+      "id": "task-7BEFFE30-4D4C-431F-9944-9C8D0ADDCD79",
+      "type": "task",
+      "title": "Find company to remove solar panels We",
+      "time": "00:00",
+      "duration": 15
+    },
+    {
+      "id": "r1",
+      "type": "routine",
+      "title": "Wake up · Meds & supplements",
+      "time": "06:00",
+      "icon": "🌅",
+      "details": [
+        "Lexapro (escitalopram) — antidepressant/anxiety",
+        "Wellbutrin XL (bupropion) — antidepressant/focus",
+        "With breakfast"
+      ]
+    },
+    {
+      "id": "r2",
+      "type": "routine",
+      "title": "Shower, skincare, brush & floss",
+      "time": "06:30",
+      "icon": "🚿",
+      "details": [
+        "Cleanse: The Ordinary Glucoside Foaming Cleanser",
+        "Hydrate: The Ordinary Hyaluronic Acid 2% + B5",
+        "Sunscreen: The Ordinary UV Filters SPF 45 (most important!)",
+        "Brush: Quip Ultra + Colgate Total (2 min)",
+        "Floss: Oral-B Glide Ultra Deep Clean picks",
+        "Rinse: Crest Deep Cleanse Mouthwash"
+      ]
+    },
+    {
+      "id": "r3",
+      "type": "routine",
+      "title": "Empty dishwasher & breakfast with kids",
+      "time": "07:00",
+      "icon": "🍳"
+    },
+    {
+      "id": "task-5D928BE8-7340-4541-8BEF-E30783A95932",
+      "type": "task",
+      "title": "Take morning pills",
+      "time": "08:00",
+      "duration": 15
+    },
+    {
+      "id": "r4",
+      "type": "routine",
+      "title": "Erin leaves (Jack to school, Cian to gym)",
+      "time": "08:50",
+      "icon": "👋"
+    },
+    {
+      "id": "r7",
+      "type": "routine",
+      "title": "Start work",
+      "time": "11:00",
+      "icon": "💼"
+    },
+    {
+      "id": "r8",
+      "type": "routine",
+      "title": "Jack school pickup",
+      "time": "15:00",
+      "icon": "🚗"
+    },
+    {
+      "id": "r9",
+      "type": "routine",
+      "title": "Wrap work",
+      "time": "17:30",
+      "icon": "✋"
+    },
+    {
+      "id": "r10",
+      "type": "routine",
+      "title": "Dinner + family time",
+      "time": "18:00",
+      "icon": "🍽️"
+    },
+    {
+      "id": "r11",
+      "type": "routine",
+      "title": "Cian to bed",
+      "time": "19:00",
+      "icon": "😴"
+    },
+    {
+      "id": "r12",
+      "type": "routine",
+      "title": "Jack to bed",
+      "time": "20:30",
+      "icon": "🛏️"
+    },
+    {
+      "id": "r13",
+      "type": "routine",
+      "title": "Evening meds, skincare, brush & floss",
+      "time": "21:00",
+      "icon": "🧴",
+      "details": [
+        "Meds: Crestor (rosuvastatin) with dinner",
+        "Ritual supplements: Multivitamin, Probiotic, Melatonin",
+        "Cleanse: The Ordinary Glucoside Foaming Cleanser",
+        "Active: The Ordinary Retinol 0.2% (pea-sized, 2–3x/week initially)",
+        "Moisturize: The Ordinary Natural Moisturizing Factors + HA",
+        "Brush: Quip Ultra + Colgate Total (2 min)",
+        "Floss: Oral-B Glide Ultra Deep Clean picks",
+        "Rinse: Crest Deep Cleanse Mouthwash"
+      ]
+    },
+    {
+      "id": "r14",
+      "type": "routine",
+      "title": "Wind down (reading, no screens)",
+      "time": "21:30",
+      "icon": "📖"
+    },
+    {
+      "id": "r15",
+      "type": "routine",
+      "title": "Lights out",
+      "time": "22:00",
+      "icon": "💤"
+    }
   ]
 }
