@@ -780,22 +780,30 @@
 
         // Attach scroll handler for header collapse (after header is rendered)
         const header = document.getElementById('main-header');
-        const compactBar = header.querySelector('.compact-bar');
-        const SCROLL_THRESHOLD = 60; // Show compact bar after scrolling 60px
+        if (!header) {
+          console.error('Header element not found!');
+        } else {
+          const compactBar = header.querySelector('.compact-bar');
+          const SCROLL_THRESHOLD = 60; // Show compact bar after scrolling 60px
 
-        window.addEventListener('scroll', () => {
-          // Smooth header height change
-          const progress = Math.min(window.scrollY / 120, 1);
-          const height = 120 - (72 * progress);
-          header.style.minHeight = height + 'px';
+          window.addEventListener('scroll', () => {
+            // Smooth header height change
+            const progress = Math.min(window.scrollY / 120, 1);
+            const height = 120 - (72 * progress);
+            header.style.minHeight = height + 'px';
 
-          // Show/hide compact bar based on scroll
-          if (window.scrollY > SCROLL_THRESHOLD) {
-            compactBar.classList.add('show');
-          } else {
-            compactBar.classList.remove('show');
-          }
-        }, { passive: true });
+            // Show/hide compact bar based on scroll
+            if (compactBar) {
+              if (window.scrollY > SCROLL_THRESHOLD) {
+                compactBar.classList.add('show');
+              } else {
+                compactBar.classList.remove('show');
+              }
+            }
+          }, { passive: true });
+          
+          console.log('✅ Header scroll handler attached');
+        }
 
         // Auto-scroll to the current hour block
         const currentHour = new Date().getHours();
