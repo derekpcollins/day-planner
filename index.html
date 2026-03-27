@@ -748,12 +748,6 @@
       const header = document.getElementById('main-header');
       const EXPANDED_HEIGHT = 120;
       const COLLAPSED_HEIGHT = 48;
-
-      window.addEventListener('scroll', () => {
-        const progress = Math.min(window.scrollY / EXPANDED_HEIGHT, 1); // 0→1 over 120px
-        const height = EXPANDED_HEIGHT - (EXPANDED_HEIGHT - COLLAPSED_HEIGHT) * progress;
-        header.style.minHeight = height + 'px';
-      }, { passive: true });
     }
 
     async function init() {
@@ -773,6 +767,17 @@
         }
         const data = await res.json();
         render(data, weather);
+
+        // Attach scroll handler for header collapse (after header is rendered)
+        const header = document.getElementById('main-header');
+        const EXPANDED_HEIGHT = 120;
+        const COLLAPSED_HEIGHT = 48;
+
+        window.addEventListener('scroll', () => {
+          const progress = Math.min(window.scrollY / EXPANDED_HEIGHT, 1); // 0→1 over 120px
+          const height = EXPANDED_HEIGHT - (EXPANDED_HEIGHT - COLLAPSED_HEIGHT) * progress;
+          header.style.minHeight = height + 'px';
+        }, { passive: true });
 
         // Auto-scroll to the current hour block
         const currentHour = new Date().getHours();
