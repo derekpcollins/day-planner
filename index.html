@@ -49,29 +49,36 @@
       z-index: 100;
       background: var(--bg);
       min-height: 120px;
-      overflow: hidden;
+      padding: 20px;
       border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column-reverse;
-      justify-content: flex-end;
+      overflow: hidden;
+      transition: none;
     }
 
     .header-full {
-      padding: 0 20px 16px;
-      flex-shrink: 1;
-      min-height: 0;
-      overflow: hidden;
+      pointer-events: auto;
     }
 
     .compact-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
       height: 48px;
-      flex-shrink: 0;
       padding: 0 20px;
       font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0s;
+    }
+
+    .compact-bar.show {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .compact-day {
@@ -773,13 +780,21 @@
 
         // Attach scroll handler for header collapse (after header is rendered)
         const header = document.getElementById('main-header');
-        const EXPANDED_HEIGHT = 120;
-        const COLLAPSED_HEIGHT = 48;
+        const compactBar = header.querySelector('.compact-bar');
+        const SCROLL_THRESHOLD = 60; // Show compact bar after scrolling 60px
 
         window.addEventListener('scroll', () => {
-          const progress = Math.min(window.scrollY / EXPANDED_HEIGHT, 1); // 0→1 over 120px
-          const height = EXPANDED_HEIGHT - (EXPANDED_HEIGHT - COLLAPSED_HEIGHT) * progress;
+          // Smooth header height change
+          const progress = Math.min(window.scrollY / 120, 1);
+          const height = 120 - (72 * progress);
           header.style.minHeight = height + 'px';
+
+          // Show/hide compact bar based on scroll
+          if (window.scrollY > SCROLL_THRESHOLD) {
+            compactBar.classList.add('show');
+          } else {
+            compactBar.classList.remove('show');
+          }
         }, { passive: true });
 
         // Auto-scroll to the current hour block
