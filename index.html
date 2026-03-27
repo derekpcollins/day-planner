@@ -48,37 +48,16 @@
       top: 0;
       z-index: 100;
       background: var(--bg);
-      min-height: 120px;
       padding: 20px;
       border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      transition: none;
     }
 
     .header-full {
-      pointer-events: auto;
+      /* full header content */
     }
 
     .compact-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: 48px;
-      padding: 0 20px;
-      font-size: 14px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0s;
-    }
-
-    .compact-bar.show {
-      opacity: 1;
-      pointer-events: auto;
+      display: none;
     }
 
     .compact-day {
@@ -777,33 +756,6 @@
         }
         const data = await res.json();
         render(data, weather);
-
-        // Attach scroll handler for header collapse (after header is rendered)
-        const header = document.getElementById('main-header');
-        if (!header) {
-          console.error('Header element not found!');
-        } else {
-          const compactBar = header.querySelector('.compact-bar');
-          const SCROLL_THRESHOLD = 60; // Show compact bar after scrolling 60px
-
-          window.addEventListener('scroll', () => {
-            // Smooth header height change
-            const progress = Math.min(window.scrollY / 120, 1);
-            const height = 120 - (72 * progress);
-            header.style.minHeight = height + 'px';
-
-            // Show/hide compact bar based on scroll
-            if (compactBar) {
-              if (window.scrollY > SCROLL_THRESHOLD) {
-                compactBar.classList.add('show');
-              } else {
-                compactBar.classList.remove('show');
-              }
-            }
-          }, { passive: true });
-          
-          console.log('✅ Header scroll handler attached');
-        }
 
         // Auto-scroll to the current hour block
         const currentHour = new Date().getHours();
