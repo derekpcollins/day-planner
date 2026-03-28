@@ -37,12 +37,12 @@ const HARDCODED_ROUTINES = [
     ]
   },
   { id: "r3", type: "routine", title: "Empty dishwasher & breakfast with kids", time: "07:00", icon: "🍳" },
-  { id: "r4", type: "routine", title: "Erin leaves (Jack to school, Cian to gym)", time: "08:50", icon: "👋" },
+  { id: "r4", type: "routine", title: "Erin leaves (Jack to school, Cian to gym)", time: "08:50", icon: "👋", weekdayOnly: true },
   { id: "r5", type: "event", title: "Workout @ ASAP Fitness", time: "09:00", duration: 60, workoutDaysOnly: true },
   { id: "r6", type: "event", title: "Vitality Bowl — Warrior Açaí", time: "10:00", duration: 15, workoutDaysOnly: true },
-  { id: "r7", type: "routine", title: "Start work", time: "11:00", icon: "💼" },
-  { id: "r8", type: "routine", title: "Jack school pickup", time: "15:00", icon: "🚗" },
-  { id: "r9", type: "routine", title: "Wrap work", time: "17:30", icon: "✋" },
+  { id: "r7", type: "routine", title: "Start work", time: "11:00", icon: "💼", weekdayOnly: true },
+  { id: "r8", type: "routine", title: "Jack school pickup", time: "15:00", icon: "🚗", weekdayOnly: true },
+  { id: "r9", type: "routine", title: "Wrap work", time: "17:30", icon: "✋", weekdayOnly: true },
   { id: "r10", type: "routine", title: "Dinner + family time", time: "18:00", icon: "🍽️" },
   { id: "r11", type: "routine", title: "Cian to bed", time: "19:00", icon: "😴" },
   { id: "r12", type: "routine", title: "Jack to bed", time: "20:30", icon: "🛏️" },
@@ -148,9 +148,11 @@ function generateSchedule() {
   // Add tasks from reminders
   allItems.push(...tasks);
 
-  // Filter out workout-only items on non-workout days
+  // Filter out workout-only and weekday-only items based on day of week
+  const isWeekday = dayIndex >= 1 && dayIndex <= 5; // Mon-Fri (0=Sun, 6=Sat)
   const filteredItems = allItems.filter(item => {
     if (item.workoutDaysOnly && !isWorkoutDay) return false;
+    if (item.weekdayOnly && !isWeekday) return false;
     return true;
   });
 
