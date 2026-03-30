@@ -1,18 +1,23 @@
 {
-  "date": "2026-03-29",
-  "updated": "2026-03-29T07:00:00-04:00",
-  "summary": "3 tasks · Full day routine",
+  "date": "2026-03-30",
+  "updated": "2026-03-30T07:00:00-04:00",
+  "summary": "Workout day",
   "items": [
     { "id": "r1", "type": "routine", "title": "Wake up", "time": "06:00", "icon": "🌅" },
     { "id": "r2", "type": "routine", "title": "Meds & supplements", "time": "06:00", "icon": "💊" },
     { "id": "r3", "type": "routine", "title": "Shower, skincare, brush & floss", "time": "06:30", "icon": "🚿" },
-    { "id": "r4", "type": "routine", "title": "Empty dishwasher, breakfast with kids", "time": "07:00", "icon": "🍳" },
-    { "id": "1", "type": "task", "title": "Call Westin to extend reservation", "time": "09:00", "duration": 15, "priority": "high", "notes": "Due today" },
-    { "id": "r5", "type": "routine", "title": "Dinner + family time", "time": "18:00", "icon": "🍽️" },
-    { "id": "r6", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "🛏️" },
-    { "id": "r7", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "🛏️" },
-    { "id": "r8", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🦷" },
-    { "id": "r9", "type": "routine", "title": "Wind down (reading, no screens)", "time": "21:30", "icon": "📖" },
-    { "id": "r10", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "💤" }
+    { "id": "r4", "type": "routine", "title": "Empty dishwasher, breakfast with kids", "time": "07:00", "icon": "🍽️" },
+    { "id": "r5", "type": "routine", "title": "Erin leaves (Jack to school, Cian to gym)", "time": "08:50", "icon": "🚗" },
+    { "id": "r6", "type": "routine", "title": "Workout @ ASAP Fitness", "time": "09:00", "icon": "💪", "duration": 60 },
+    { "id": "r7", "type": "routine", "title": "Vitality Bowl — Warrior Açaí", "time": "10:00", "icon": "🥗" },
+    { "id": "r8", "type": "routine", "title": "Start work", "time": "11:00", "icon": "💼" },
+    { "id": "r9", "type": "routine", "title": "Jack school pickup", "time": "15:00", "icon": "🏫" },
+    { "id": "r10", "type": "routine", "title": "Wrap work", "time": "17:30", "icon": "🏁" },
+    { "id": "r11", "type": "routine", "title": "Dinner + family time", "time": "18:00", "icon": "👨‍👩‍👧‍👦" },
+    { "id": "r12", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "🛏️" },
+    { "id": "r13", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "😴" },
+    { "id": "r14", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🦷" },
+    { "id": "r15", "type": "routine", "title": "Wind down (reading, no screens)", "time": "21:30", "icon": "📖" },
+    { "id": "r16", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "🌙" }
   ]
 }
