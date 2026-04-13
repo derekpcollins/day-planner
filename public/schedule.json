@@ -1,20 +1,22 @@
 {
-  "date": "2026-04-12",
-  "updated": "2026-04-12T07:00:00",
-  "summary": "10 routine items",
+  "date": "2026-04-13",
+  "dayOfWeek": "Monday",
+  "updated": "2026-04-13T07:00:00-04:00",
+  "summary": "7 routine items · 1 workout · Trainer day",
   "items": [
-    { "id": "r1", "type": "routine", "title": "Wake up", "time": "06:00", "icon": "🌅" },
-    { "id": "r2", "type": "routine", "title": "Meds & supplements", "time": "06:00", "icon": "💊" },
-    { "id": "r3", "type": "routine", "title": "Shower, skincare, brush & floss", "time": "06:30", "icon": "🚿" },
-    { "id": "r4", "type": "routine", "title": "Empty dishwasher, breakfast with kids", "time": "07:00", "icon": "🍽️" },
-    { "id": "r5", "type": "routine", "title": "Erin leaves (Jack to school, Cian to gym)", "time": "08:50", "icon": "👋" },
-    { "id": "r6", "type": "routine", "title": "Start work", "time": "11:00", "icon": "💼" },
-    { "id": "r7", "type": "routine", "title": "Wrap work", "time": "17:30", "icon": "✋" },
-    { "id": "r8", "type": "routine", "title": "Dinner + family time", "time": "18:00", "icon": "🍴" },
-    { "id": "r9", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "🛏️" },
-    { "id": "r10", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "🛏️" },
-    { "id": "r11", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🧼" },
-    { "id": "r12", "type": "routine", "title": "Wind down (reading, no screens)", "time": "21:30", "icon": "📖" },
-    { "id": "r13", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "🌙" }
+    { "id": "r1", "type": "routine", "title": "Wake up, meds & supplements", "time": "06:00", "icon": "⏰" },
+    { "id": "r2", "type": "routine", "title": "Shower, skincare, brush & floss", "time": "06:30", "icon": "🚿" },
+    { "id": "r3", "type": "routine", "title": "Empty dishwasher, breakfast with kids", "time": "07:00", "icon": "🍳" },
+    { "id": "r4", "type": "routine", "title": "Erin leaves with Jack & Cian", "time": "08:50", "icon": "🚗" },
+    { "id": "e1", "type": "event", "title": "Workout with trainer @ ASAP Fitness", "time": "09:00", "duration": 60, "icon": "💪", "notes": "" },
+    { "id": "e2", "type": "event", "title": "Vitality Bowl — Warrior Açaí Bowl", "time": "10:00", "duration": 20, "icon": "🥣", "notes": "post-workout" },
+    { "id": "r5", "type": "routine", "title": "Start work", "time": "11:00", "icon": "💻" },
+    { "id": "r6", "type": "routine", "title": "Jack school pickup", "time": "15:00", "icon": "🏫" },
+    { "id": "r7", "type": "routine", "title": "Wrap work, dinner & family time", "time": "17:30", "icon": "🍽️" },
+    { "id": "r8", "type": "routine", "title": "Cian to bed", "time": "19:00", "icon": "😴" },
+    { "id": "r9", "type": "routine", "title": "Jack to bed", "time": "20:30", "icon": "😴" },
+    { "id": "r10", "type": "routine", "title": "Meds, brush, floss, skincare", "time": "21:00", "icon": "🧴" },
+    { "id": "r11", "type": "routine", "title": "Wind down — reading, no screens", "time": "21:30", "icon": "📖" },
+    { "id": "r12", "type": "routine", "title": "Lights out", "time": "22:00", "icon": "💤" }
   ]
 }
